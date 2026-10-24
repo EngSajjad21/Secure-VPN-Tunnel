@@ -3,7 +3,7 @@
 ![Banner](banner.png)
 
 ## 🌟 Overview
-A robust, high-performance **Secure VPN Tunnel** implementation in Python. This project demonstrates core network security principles, including secure key agreement, authenticated encryption, and real-time integrity verification. Designed for engineers and security enthusiasts.
+A secure client-server communication prototype in Python. This project demonstrates ECDH key agreement, authenticated encryption, message framing, replay protection, and integrity verification. It is an educational encrypted messaging tunnel, not a full system-level VPN such as WireGuard or OpenVPN.
 
 Developed by **Eng. Sajjad** 🚀
 
@@ -11,8 +11,9 @@ Developed by **Eng. Sajjad** 🚀
 
 ## 🛠 Features
 - **⚡ Secure Key Exchange**: Uses **Elliptic Curve Diffie-Hellman (ECDH)** with the P-256 curve.
-- **🛡 Strong Encryption**: **AES-256-CBC** ensures total data confidentiality.
-- **🔍 Integrity Verification**: **HMAC-SHA256** signatures for every packet to prevent Man-in-the-Middle (MITM) attacks.
+- **🛡 Strong Encryption**: **AES-256-CBC** provides message confidentiality.
+- **🔍 Integrity Verification**: **HMAC-SHA256** authenticates every framed message.
+- **🔁 Replay Protection**: Monotonic message counters reject replayed or reordered messages.
 - **🎨 Interactive UI**: Beautifully colored terminal output for monitoring handshakes and data flow.
 - **📂 Modular Design**: Clean separation between cryptography and networking logic.
 
@@ -23,7 +24,7 @@ The system follows a classic Client-Server architecture:
 1. **TCP Handshake**: Connection established over standard sockets.
 2. **Key Agreement**: Public keys are exchanged; shared secret derived using ECDH.
 3. **Key Derivation**: HKDF is used to split the secret into AES and HMAC keys.
-4. **Encrypted Tunnel**: Data is transmitted inside encrypted JSON payloads.
+4. **Encrypted Tunnel**: Length-prefixed encrypted JSON messages are transmitted over TCP.
 
 ---
 
@@ -47,13 +48,13 @@ pip install pycryptodome colorama
 ### 🏃 Usage
 1. **Start the VPN Server**:
    ```bash
-   python server.py
+   VPN_HOST=127.0.0.1 python server.py
    ```
 2. **Run the VPN Client**:
    ```bash
    python client.py
    ```
-3. Type your messages in the client terminal and watch them securely travel through the tunnel!
+3. Type your messages in the client terminal and watch them travel through the encrypted prototype tunnel. Keep `VPN_HOST` bound to a trusted interface unless remote access is required.
 
 ---
 
